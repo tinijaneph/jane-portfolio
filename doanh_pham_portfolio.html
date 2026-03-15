@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doanh Pham – Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f4f1eb;
+    --accent: #c8412b;
+    --accent2: #1a3a5c;
+    --muted: #7a7570;
+    --grid: rgba(10,10,10,0.06);
+    --card: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Grid paper background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  header {
+    padding: 80px 0 60px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 8vw, 80px);
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+  h1 em { font-style: italic; color: var(--accent2); }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    margin-top: 20px;
+    max-width: 520px;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .hero-meta span { color: var(--muted); }
+  .hero-meta strong { color: var(--ink); display: block; font-size: 18px; letter-spacing: -0.5px; margin-top: 4px; font-family: 'DM Serif Display', serif; font-style: italic; }
+
+  /* ── SECTION HEADERS ── */
+  section { padding: 64px 0; border-bottom: 1px solid rgba(10,10,10,0.12); }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    letter-spacing: -1px;
+    margin-bottom: 40px;
+  }
+
+  /* ── IMPACT NUMBERS ── */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .impact-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: transform 0.2s;
+  }
+  .impact-card:hover { transform: translateY(-3px); }
+  .impact-card:nth-child(2) { background: var(--accent2); }
+  .impact-card:nth-child(3) { background: var(--accent); }
+  .impact-card:nth-child(5) { background: var(--accent); }
+  .impact-card:nth-child(6) { background: var(--accent2); }
+  .impact-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+  .impact-label {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 10px;
+    line-height: 1.4;
+    font-family: 'Space Mono', monospace;
+  }
+  .impact-card::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* ── LIVE DEMO: ATTRITION MODEL ── */
+  .demo-box {
+    background: var(--card);
+    border: 1px solid rgba(10,10,10,0.1);
+    padding: 40px;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .demo-intro {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  .slider-group label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .slider-group .val {
+    float: right;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  input[type=range] {
+    width: 100%;
+    appearance: none;
+    height: 2px;
+    background: var(--ink);
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px; height: 14px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .risk-display {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+  }
+  .risk-gauge {
+    width: 80px; height: 80px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .risk-gauge svg { width: 100%; height: 100%; }
+  .risk-text h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    letter-spacing: -1px;
+  }
+  .risk-text p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .risk-factors {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .factor-chip {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border: 1px solid;
+    letter-spacing: 0.5px;
+  }
+  .factor-chip.high { border-color: var(--accent); color: var(--accent); background: rgba(200,65,43,0.06); }
+  .factor-chip.med { border-color: var(--accent2); color: var(--accent2); background: rgba(26,58,92,0.06); }
+  .factor-chip.low { border-color: var(--muted); color: var(--muted); }
+
+  /* ── RAG DEMO ── */
+  .rag-demo {
+    background: var(--ink);
+    padding: 40px;
+    color: var(--paper);
+    box-shadow: 4px 4px 0 var(--accent);
+  }
+  .rag-pipeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .rag-step {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 10px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .rag-arrow {
+    font-size: 16px;
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+  .rag-step.active { background: var(--accent); border-color: var(--accent); }
+  .rag-input-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  #rag-input {
+    flex: 1;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--paper);
+    padding: 12px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    outline: none;
+  }
+  #rag-input::placeholder { opacity: 0.4; }
+  #rag-input:focus { border-color: var(--accent); }
+  .rag-btn {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .rag-btn:hover { opacity: 0.85; }
+  .rag-output {
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid var(--accent);
+    padding: 20px;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 80px;
+    color: rgba(244,241,235,0.85);
+  }
+  .rag-retrieved {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .rag-chunk {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 3px 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(244,241,235,0.5);
+  }
+  .typing::after { content: '▌'; animation: blink 0.7s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ── SKILLS MATRIX ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .skill-category h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(10,10,10,0.1);
+  }
+  .skill-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .skill-name {
+    font-size: 13px;
+    width: 120px;
+    flex-shrink: 0;
+  }
+  .skill-bar-track {
+    flex: 1;
+    height: 3px;
+    background: rgba(10,10,10,0.1);
+    position: relative;
+  }
+  .skill-bar-fill {
+    height: 100%;
+    background: var(--ink);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .skill-bar-fill.accent { background: var(--accent); }
+  .skill-bar-fill.accent2 { background: var(--accent2); }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px;
+    background: var(--ink);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.5s ease;
+  }
+  .tl-item.visible { opacity: 1; transform: translateX(0); }
+  .tl-dot {
+    position: absolute;
+    left: -28px; top: 6px;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .tl-company {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+  }
+  .tl-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin: 4px 0 12px;
+  }
+  .tl-bullets { list-style: none; }
+  .tl-bullets li {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .tl-bullets li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 5px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 48px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    letter-spacing: -1px;
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .footer-links a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .footer-links a:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── ANIMATE IN ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    .sliders { grid-template-columns: 1fr; }
+    .impact-grid { grid-template-columns: repeat(2, 1fr); }
+    .skills-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .rag-pipeline { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header>
+  <div class="wrap">
+    <p class="hero-tag">Interactive Portfolio · Data Science · AI/ML</p>
+    <h1>Doanh<br><em>Pham</em></h1>
+    <p class="hero-sub">Data Scientist building predictive models, LLM-powered analytics products, and experimentation frameworks on enterprise-scale data.</p>
+    <div class="hero-meta">
+      <div><span>Current Role</span><strong>Airbus, Herndon VA</strong></div>
+      <div><span>Education</span><strong>CMU MSBA + UC Berkeley</strong></div>
+      <div><span>Applying To</span><strong>QuantumBlack, McKinsey</strong></div>
+    </div>
+  </div>
+</header>
+
+<!-- IMPACT NUMBERS -->
+<section>
+  <div class="wrap">
+    <p class="section-label">Quantified Impact</p>
+    <h2>Numbers that moved the needle</h2>
+    <div class="impact-grid fade-up">
+      <div class="impact-card"><div class="impact-num">93%</div><div class="impact-label">Data latency reduction in ETL pipelines (65%→99% reliability)</div></div>
+      <div class="impact-card"><div class="impact-num">$10M+</div><div class="impact-label">Annual budgeting decisions supported by Cost of Labor forecasting model</div></div>
+      <div class="impact-card"><div class="impact-num">70%</div><div class="impact-label">Manual analysis time saved via LLM-powered analytics assistant</div></div>
+      <div class="impact-card"><div class="impact-num">100K+</div><div class="impact-label">Employee records analyzed for workforce attrition drivers</div></div>
+      <div class="impact-card"><div class="impact-num">86%</div><div class="impact-label">Accuracy of HVAC predictive maintenance ML model at BART</div></div>
+      <div class="impact-card"><div class="impact-num">25%</div><div class="impact-label">Forecasting accuracy improvement for 15+ managers across business units</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE ATTRITION MODEL DEMO -->
+<section>
+  <div class="wrap">
+    <p class="section-label">Live Interactive Demo</p>
+    <h2>Workforce Attrition Risk Model</h2>
+    <div class="demo-box fade-up">
+      <p class="demo-intro">
+        Inspired by my work at Airbus analyzing 100K+ employee records — adjust the inputs below to see how a simplified logistic-regression-style attrition risk score responds in real time. This reflects the type of explanatory, human-readable model I build for non-technical stakeholders.
+      </p>
+      <div class="sliders">
+        <div class="slider-group">
+          <label>Tenure (years) <span class="val" id="v-tenure">3</span></label>
+          <input type="range" id="s-tenure" min="0" max="20" value="3" step="0.5">
+        </div>
+        <div class="slider-group">
+          <label>Promotion gap (years since last) <span class="val" id="v-promo">2</span></label>
+          <input type="range" id="s-promo" min="0" max="8" value="2" step="0.5">
+        </div>
+        <div class="slider-group">
+          <label>Manager satisfaction score <span class="val" id="v-mgr">6</span>/10</label>
+          <input type="range" id="s-mgr" min="1" max="10" value="6">
+        </div>
+        <div class="slider-group">
+          <label>Comp ratio vs market <span class="val" id="v-comp">0.95</span>x</label>
+          <input type="range" id="s-comp" min="0.7" max="1.3" value="0.95" step="0.01">
+        </div>
+        <div class="slider-group">
+          <label>Project impact clarity <span class="val" id="v-proj">5</span>/10</label>
+          <input type="range" id="s-proj" min="1" max="10" value="5">
+        </div>
+        <div class="slider-group">
+          <label>Peers who left recently <span class="val" id="v-peers">1</span></label>
+          <input type="range" id="s-peers" min="0" max="10" value="1">
+        </div>
+      </div>
+
+      <div class="risk-display">
+        <div class="risk-gauge">
+          <svg viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(10,10,10,0.08)" stroke-width="6"/>
+            <circle id="gauge-circle" cx="40" cy="40" r="32" fill="none" stroke="#c8412b" stroke-width="6"
+              stroke-dasharray="201" stroke-dashoffset="160" stroke-linecap="round"
+              transform="rotate(-90 40 40)" style="transition: stroke-dashoffset 0.4s ease"/>
+            <text x="40" y="46" text-anchor="middle" font-family="DM Serif Display,serif" font-size="16" fill="#0a0a0a" id="gauge-text">32%</text>
+          </svg>
+        </div>
+        <div class="risk-text">
+          <h3 id="risk-label">Moderate Risk</h3>
+          <p id="risk-desc">Employee shows mixed signals. Monitor engagement and career clarity.</p>
+          <div class="risk-factors" id="risk-factors">
+            <span class="factor-chip med">LOW TENURE</span>
+            <span class="factor-chip low">COMP OK</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RAG DEMO -->
+<section>
+  <div class="wrap">
+    <p class="section-label">LLM + RAG Architecture</p>
+    <h2>HR Policy Navigator — Live Demo</h2>
+    <div class="rag-demo fade-up">
+      <div class="rag-pipeline">
+        <div class="rag-step" id="p-query">User Query</div>
+        <div class="rag-arrow">→</div>
+        <div class="rag-step" id="p-embed">Embedding</div>
+        <div class="rag-arrow">→</div>
+        <div class="rag-step" id="p-retrieval">Vector Search</div>
+        <div class="rag-arrow">→</div>
+        <div class="rag-step" id="p-context">Context Inject</div>
+        <div class="rag-arrow">→</div>
+        <div class="rag-step" id="p-llm">LLM Response</div>
+      </div>
+      <div class="rag-input-row">
+        <input type="text" id="rag-input" placeholder="Ask an HR policy question...">
+        <button class="rag-btn" onclick="ragQuery()">Ask →</button>
+      </div>
+      <div class="rag-output" id="rag-output">
+        <span style="opacity:0.4; font-family:'Space Mono',monospace; font-size:11px;">// Simulated RAG pipeline — type a question and hit Ask</span>
+      </div>
+      <div class="rag-retrieved" id="rag-chunks" style="display:none"></div>
+    </div>
+    <p style="font-size:12px; color:var(--muted); margin-top:16px; font-family:'Space Mono',monospace;">
+      * Simulated pipeline for demonstration. Real system built with LangChain, FAISS vector store, and document embeddings.
+    </p>
+  </div>
+</section>
+
+<!-- SKILLS MATRIX -->
+<section>
+  <div class="wrap">
+    <p class="section-label">Technical Stack</p>
+    <h2>Skills matrix</h2>
+    <div class="skills-grid fade-up">
+      <div class="skill-category">
+        <h4>Machine Learning & Statistics</h4>
+        <div class="skill-bar-row"><span class="skill-name">Predictive Modeling</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.95"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Experimentation / A/B</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.90"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Causal Inference</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.82"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Deep Learning</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.75"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Time Series</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.85"></div></div></div>
+      </div>
+      <div class="skill-category">
+        <h4>LLM & GenAI</h4>
+        <div class="skill-bar-row"><span class="skill-name">RAG Pipelines</span><div class="skill-bar-track"><div class="skill-bar-fill accent" data-w="0.88"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Prompt Engineering</span><div class="skill-bar-track"><div class="skill-bar-fill accent" data-w="0.92"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">LLM Evaluation</span><div class="skill-bar-track"><div class="skill-bar-fill accent" data-w="0.80"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Agentic Workflows</span><div class="skill-bar-track"><div class="skill-bar-fill accent" data-w="0.78"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Vector Stores</span><div class="skill-bar-track"><div class="skill-bar-fill accent" data-w="0.82"></div></div></div>
+      </div>
+      <div class="skill-category">
+        <h4>Engineering & Data</h4>
+        <div class="skill-bar-row"><span class="skill-name">Python / Pandas</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.97"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">SQL / BigQuery</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.94"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">PySpark</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.83"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">ETL Pipelines</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.88"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">GCP / Cloud</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="0.78"></div></div></div>
+      </div>
+      <div class="skill-category">
+        <h4>Business & Communication</h4>
+        <div class="skill-bar-row"><span class="skill-name">Stakeholder Comms</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.91"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Dashboard Design</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.86"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Research / Synthesis</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.89"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Business Strategy</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.80"></div></div></div>
+        <div class="skill-bar-row"><span class="skill-name">Cross-team Collab</span><div class="skill-bar-track"><div class="skill-bar-fill accent2" data-w="0.92"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE TIMELINE -->
+<section>
+  <div class="wrap">
+    <p class="section-label">Professional Experience</p>
+    <h2>Where I've built</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-company">Airbus</div>
+        <div class="tl-role">Data Scientist (ML & Data Engineering) · Herndon, VA · Oct 2024 – Present</div>
+        <ul class="tl-bullets">
+          <li>Workforce attrition modeling on 100K+ records → drove retention interventions for critical roles</li>
+          <li>Quasi-A/B testing & experimentation frameworks for HR policy changes</li>
+          <li>LLM-powered analytics assistant: natural language → dashboards, 70% time saved</li>
+          <li>Cost of Labor ML forecasting → 25% accuracy gain, $10M+ budgeting decisions</li>
+          <li>SCD Type 2 historical modeling powering 10+ analytics products</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-company">BART</div>
+        <div class="tl-role">Data Scientist Intern · Oakland, CA · Feb–May 2023</div>
+        <ul class="tl-bullets">
+          <li>Predictive maintenance ML model (86% accuracy) for HVAC failure forecasting</li>
+          <li>20% system efficiency improvement, reduced downtime on infrastructure</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-company">DexCom</div>
+        <div class="tl-role">Data Analyst Intern · San Diego, CA · May–Aug 2023</div>
+        <ul class="tl-bullets">
+          <li>40K+ customer response analysis, accelerated training decisions by 30%</li>
+          <li>Automated user satisfaction dashboards and product support trend tracking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap" style="width:100%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+    <div class="footer-name">Doanh Pham</div>
+    <div class="footer-links">
+      <a href="mailto:janetiniph@gmail.com">Email</a>
+      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+      <span style="color:var(--muted); font-family:'Space Mono',monospace; font-size:10px;">CMU MSBA '26 · UC Berkeley '24</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── ATTRITION MODEL ──
+const inputs = {
+  tenure: document.getElementById('s-tenure'),
+  promo: document.getElementById('s-promo'),
+  mgr: document.getElementById('s-mgr'),
+  comp: document.getElementById('s-comp'),
+  proj: document.getElementById('s-proj'),
+  peers: document.getElementById('s-peers')
+};
+const vals = {
+  tenure: document.getElementById('v-tenure'),
+  promo: document.getElementById('v-promo'),
+  mgr: document.getElementById('v-mgr'),
+  comp: document.getElementById('v-comp'),
+  proj: document.getElementById('v-proj'),
+  peers: document.getElementById('v-peers')
+};
+
+function sigmoid(x) { return 1 / (1 + Math.exp(-x)); }
+
+function computeRisk() {
+  const t = parseFloat(inputs.tenure.value);
+  const p = parseFloat(inputs.promo.value);
+  const m = parseFloat(inputs.mgr.value);
+  const c = parseFloat(inputs.comp.value);
+  const pr = parseFloat(inputs.proj.value);
+  const pe = parseFloat(inputs.peers.value);
+
+  // Simplified logistic model inspired by real workforce analytics
+  let score = 0;
+  score += (3 - Math.min(t, 5)) * 0.18;       // Low tenure = higher risk
+  score += (p - 1.5) * 0.15;                  // Longer since promotion
+  score += (5 - m) * 0.12;                    // Low manager sat
+  score += (1 - c) * 1.8;                     // Below market comp (big factor)
+  score += (5 - pr) * 0.10;                   // Low project clarity
+  score += pe * 0.08;                          // Peer contagion
+  score += -0.4;                               // intercept
+
+  const risk = Math.round(sigmoid(score) * 100);
+  return { risk, t, p, m, c, pr, pe };
+}
+
+function updateRisk() {
+  vals.tenure.textContent = inputs.tenure.value;
+  vals.promo.textContent = inputs.promo.value;
+  vals.mgr.textContent = inputs.mgr.value;
+  vals.comp.textContent = parseFloat(inputs.comp.value).toFixed(2);
+  vals.proj.textContent = inputs.proj.value;
+  vals.peers.textContent = inputs.peers.value;
+
+  const { risk, t, p, m, c, pr, pe } = computeRisk();
+
+  const circle = document.getElementById('gauge-circle');
+  const circumference = 201;
+  const offset = circumference - (risk / 100) * circumference;
+  circle.style.strokeDashoffset = offset;
+  circle.style.stroke = risk >= 65 ? '#c8412b' : risk >= 40 ? '#1a3a5c' : '#4a7c59';
+  document.getElementById('gauge-text').textContent = risk + '%';
+
+  const label = document.getElementById('risk-label');
+  const desc = document.getElementById('risk-desc');
+  const factors = document.getElementById('risk-factors');
+
+  if (risk >= 65) {
+    label.textContent = 'High Risk';
+    desc.textContent = 'Multiple significant attrition signals present. Immediate retention intervention recommended.';
+  } else if (risk >= 40) {
+    label.textContent = 'Moderate Risk';
+    desc.textContent = 'Some warning indicators. Proactive engagement and career path clarity would help.';
+  } else {
+    label.textContent = 'Low Risk';
+    desc.textContent = 'Employee profile shows positive retention indicators. Continue current engagement practices.';
+  }
+
+  const chips = [];
+  if (t < 2) chips.push(['LOW TENURE', 'high']);
+  else if (t > 8) chips.push(['VETERAN', 'low']);
+  if (p > 4) chips.push(['STAGNANT CAREER', 'high']);
+  if (m < 4) chips.push(['POOR MGR SAT', 'high']);
+  if (c < 0.9) chips.push(['BELOW MARKET', 'high']);
+  else if (c > 1.1) chips.push(['ABOVE MARKET', 'low']);
+  if (pr < 4) chips.push(['LOW CLARITY', 'med']);
+  if (pe >= 3) chips.push(['PEER FLIGHT RISK', 'med']);
+  if (chips.length === 0) chips.push(['STABLE PROFILE', 'low']);
+
+  factors.innerHTML = chips.map(([label, cls]) =>
+    `<span class="factor-chip ${cls}">${label}</span>`
+  ).join('');
+}
+
+Object.values(inputs).forEach(el => el.addEventListener('input', updateRisk));
+updateRisk();
+
+// ── RAG DEMO ──
+const ragKB = [
+  {
+    q: ['vacation', 'pto', 'leave', 'time off', 'holiday'],
+    chunks: ['Policy §4.2: Annual Leave', 'Policy §4.5: Holiday Calendar', 'Exhibit B: Leave Accrual'],
+    answer: 'Full-time employees accrue 15 days of PTO annually in Years 1–3, scaling to 20 days in Year 4+. PTO requests must be submitted at least 5 business days in advance via the HR portal. Unused PTO up to 10 days may roll over per calendar year. Bereavement leave of 3–5 days is granted separately. Public holidays follow the federal calendar plus 2 floating holidays of your choice.'
+  },
+  {
+    q: ['remote', 'work from home', 'wfh', 'hybrid', 'telework'],
+    chunks: ['Policy §7.1: Remote Work Framework', 'Manager Guidelines §3', 'IT Security §2.4'],
+    answer: 'The hybrid work policy allows up to 3 remote days per week for eligible roles, subject to manager approval. Employees must maintain core hours of 10am–3pm in their local time zone. All remote work must comply with IT security standards including VPN usage and approved devices. New hires complete a 90-day in-office onboarding period before becoming eligible for hybrid arrangements.'
+  },
+  {
+    q: ['promotion', 'performance', 'review', 'raise', 'salary', 'compensation', 'pay'],
+    chunks: ['Policy §9.1: Performance Review Cycle', 'Compensation Band Matrix', 'Merit Increase Guidelines'],
+    answer: 'Performance reviews occur bi-annually in June and December. Merit increases are awarded to employees rated "Meets Expectations" or above, with top performers (top 15%) eligible for 8–12% increases. Promotions require two consecutive "Exceeds Expectations" ratings and a 6-month gap since the last level change. Band ranges are reviewed annually against market benchmarks.'
+  },
+  {
+    q: ['parental', 'maternity', 'paternity', 'family', 'baby', 'child'],
+    chunks: ['Policy §5.3: Parental Leave', 'FMLA Guidelines', 'Benefits Supplement §2'],
+    answer: 'Primary caregivers receive 16 weeks of fully-paid parental leave. Secondary caregivers receive 6 weeks paid. Leave may begin up to 4 weeks before the expected birth/placement date. The company offers a phased return program: 50% schedule for the first 4 weeks back. Adoption and foster placement qualify under the same policy.'
+  },
+];
+
+function ragQuery() {
+  const q = document.getElementById('rag-input').value.toLowerCase().trim();
+  if (!q) return;
+
+  const steps = ['p-query','p-embed','p-retrieval','p-context','p-llm'];
+  steps.forEach(s => document.getElementById(s).classList.remove('active'));
+
+  const out = document.getElementById('rag-output');
+  const chunks = document.getElementById('rag-chunks');
+  out.innerHTML = '';
+  chunks.style.display = 'none';
+
+  let match = ragKB.find(entry => entry.q.some(kw => q.includes(kw)));
+  if (!match) match = {
+    chunks: ['Policy Index', 'Employee Handbook §1', 'General FAQ'],
+    answer: "I couldn't find a direct match in the HR policy documents for that query. Based on semantic similarity, your question may relate to general employment terms covered in the Employee Handbook §1.1 or the General FAQ. For specific queries not covered in the knowledge base, please contact HR directly at hr@company.com or submit a ticket via the HR portal."
+  };
+
+  let step = 0;
+  const stepInterval = setInterval(() => {
+    if (step < steps.length) {
+      document.getElementById(steps[step]).classList.add('active');
+      step++;
+    } else {
+      clearInterval(stepInterval);
+      chunks.style.display = 'flex';
+      chunks.innerHTML = match.chunks.map(c => `<span class="rag-chunk">[CHUNK] ${c}</span>`).join('');
+      typeText(match.answer);
+    }
+  }, 220);
+}
+
+function typeText(text) {
+  const out = document.getElementById('rag-output');
+  out.innerHTML = '';
+  out.classList.add('typing');
+  let i = 0;
+  const iv = setInterval(() => {
+    if (i < text.length) {
+      out.textContent += text[i++];
+    } else {
+      out.classList.remove('typing');
+      clearInterval(iv);
+    }
+  }, 18);
+}
+
+document.getElementById('rag-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') ragQuery();
+});
+
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      if (e.target.classList.contains('fade-up')) {
+        // animate skill bars inside
+        e.target.querySelectorAll('.skill-bar-fill').forEach((bar, idx) => {
+          setTimeout(() => {
+            bar.style.transform = `scaleX(${bar.dataset.w})`;
+          }, idx * 60);
+        });
+      }
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-up, .tl-item').forEach(el => observer.observe(el));
+
+// Animate skill bars that are already visible on load
+setTimeout(() => {
+  document.querySelectorAll('.skill-bar-fill').forEach((bar, idx) => {
+    setTimeout(() => { bar.style.transform = `scaleX(${bar.dataset.w})`; }, idx * 60 + 500);
+  });
+}, 300);
+</script>
+</body>
+</html>
